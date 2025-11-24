@@ -1,38 +1,60 @@
-
 import java.util.Scanner;
 
 public class Main {
+
     public static void guessNumberGame() {
         Scanner scanner = new Scanner(System.in);
         int max = 11;
         int ranNum = (int) (Math.random() * max);
-        int s = 0;
-        int k = 5;
 
-        System.out.println("Welcome, you are to guess between 0 to " + 11 + " and you have " + k + " chances");
 
-        for(int i=s; i<k; i++) {
+        final int INITIAL_CHANCES = 5;
+
+        boolean correct = false;
+        int numOfGuess = 0;
+
+        System.out.println("Welcome, you are to guess between 0 to " + (max - 1) + " and you have " + INITIAL_CHANCES + " normal chances, after that your chances keep counting.");
+        int guessNum;
+
+        while (!correct) {
             System.out.print("Enter your guess: ");
-            int guessNum = scanner.nextInt();
+            guessNum = scanner.nextInt();
+
+
+            numOfGuess++;
 
             if (guessNum == ranNum) {
-                System.out.println("you are Correct, the number is " + ranNum);
+                System.out.println("You are Correct! The number is " + ranNum);
+                System.out.println("You made " + numOfGuess + " attempts.");
+                correct = true;
                 scanner.close();
                 return;
             }
-            else if (guessNum > ranNum) {
-                System.out.println("guess lower");
-            } else  {
-                System.out.println("guess higher");
+
+
+
+
+            if (guessNum > ranNum) {
+                System.out.print("Guess lower. ");
+            } else {
+                System.out.print("Guess higher. ");
+            }
+
+
+            if (numOfGuess < INITIAL_CHANCES) {
+
+                System.out.println("You have " + (INITIAL_CHANCES - numOfGuess) + " normal chances left.");
+            } else if (numOfGuess == INITIAL_CHANCES) {
+
+                System.out.println("This was your last normal chance. Guessing continues indefinitely.");
+            } else {
+
+                System.out.println("Total attempts made so far: " + numOfGuess);
             }
         }
-        System.out.println("you have run out of chances");
-        scanner.close();
-        System.out.println("The number is " + ranNum);
     }
 
     public static void main(String[] args) {
         guessNumberGame();
     }
 }
-
